@@ -34,5 +34,5 @@ fetch(`https://discord.com/api/v8/channels/${channel}/invites`, {
 })
 .then(res => res.json())
 .then(invite => {
- interaction.channel.send(`Ссылка на игру: https://discord.gg/${invite.code}`)
+ interaction.channel.send(`Invite to the game: https://discord.gg/${invite.code}`)
 });

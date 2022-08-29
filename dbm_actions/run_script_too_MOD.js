@@ -2,7 +2,7 @@ module.exports = {
   name: 'Run Script Too',
   section: 'Other Stuff',
   meta: {
-    version: '2.0.11',
+    version: '2.1.5',
     preciseCheck: false,
     author: 'DBM Mods',
     authorUrl: 'https://github.com/dbm-network/mods',
@@ -11,7 +11,7 @@ module.exports = {
 
   subtitle(data) {
     if (data.title) return `${data.title}`;
-    return `${data.file ? `External File: ${data.file}` : data.code}`;
+    return `${data.file ? `Сторонний файл: ${data.file}` : data.code}`;
   },
 
   variableStorage(data, varType) {
@@ -19,51 +19,39 @@ module.exports = {
     return [data.varName, 'Unknown Type'];
   },
 
-  fields: ['behavior', 'interpretation', 'code', 'file', 'storage', 'varName', 'title'],
+  fields: ['behavior', 'interpretation', 'code', 'file', 'title'],
 
   html(_isEvent, data) {
     return `
-<div id ="wrexdiv" style="width: 550px; height: 350px; overflow-y: scroll;">
+<div id ="wrexdiv" style="width: 550px; height: 420px; overflow-y: scroll;">
   <div>
-    <div style="float: left; width: 45%;">
-      End Behavior:<br>
+    <div style="float: left; width: 45%;padding-top: 3px;">
+    <span class="dbminputlabel">Что делать в конце?</span><br>
       <select id="behavior" class="round">
-        <option value="0"selected>Call Next Action</option>
-        <option value="1">Do Not Call Next Action</option>
+        <option value="0"selected>Продолжить действия</option>
+        <option value="1">Не продолжать действия</option>
       </select>
     </div>
-    <div style="padding-left: 2%; float: left; width: 53%;">
-      Interpretation Style:<br>
+    <div style="padding-left: 2%; float: left; width: 53%; padding-top: 3px;">
+    <span class="dbminputlabel">Стиль интерпретации</span><br>
       <select id="interpretation" class="round">
-        <option value="0">Evaluate Text First</option>
-        <option value="1" selected>Evaluate Text Directly</option>
+        <option value="0">Сначала анализ кода</option>
+        <option value="1" selected>Анализ кода постепенно</option>
       </select>
     </div>
   </div><br><br><br>
-  <div id="" style="float: left; width: 98%;">
-    Script Name: (shown in the action subtitle)<br>
+  <div id="" style="float: left; width: 98%;padding-top: 3px;">
+  <span class="dbminputlabel">Название скрипта (показано в списке действий)</span><br>
     <input id="title" class="round" type="text">
   </div><br><br><br>
   <div>
-    External File Path: (Root directory is your bot folder )<br>
+  <span class="dbminputlabel">Путь к скрипту (необязательно)</span><br>
     <div style="float: left; width: 98%;">
       <input type="text" name="file" id="file" class="round" placeholder="./scripts/myscript.js" style="float: left;"/>
     </div>
   </div><br><br>
-  <div>
-    <div style="float: left; width: 45%;">
-      Store In:<br>
-      <select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer')">
-      ${data.variables[0]}
-      </select>
-    </div>
-    <div id="varNameContainer" style="padding-left: 2%; float: left; width: 53%;">
-      Variable Name:<br>
-      <input id="varName" class="round" type="text">
-    </div>
-  </div><br><br><br>
   <div style="padding-top: 8px;">
-    Or Use Custom Code: (This isn't used if an external path is defined.)<br>
+    <span class="dbminputlabel">Поле для кода (не используется, если указан путь к скрипту)</span><br>
     <textarea id="code" rows="14" name="is-eval" style="width: 98%; white-space: nowrap; resize: none;"></textarea>
   </div><br><br>
 </div>
@@ -89,10 +77,6 @@ module.exports = {
     height: 100%;
     margin-left: 4px;
     position: absolute;
-  }
-
-  span {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   }
 
   span.embed-auth {
@@ -135,11 +119,6 @@ module.exports = {
     } else {
       code = data.code;
     }
-
-    const result = this.eval(code, cache);
-    const varName = this.evalMessage(data.varName, cache);
-    const storage = parseInt(data.storage, 10);
-    this.storeValue(result, storage, varName, cache);
 
     if (data.behavior === '0') this.callNextAction(cache);
   },

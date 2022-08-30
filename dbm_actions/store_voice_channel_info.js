@@ -83,12 +83,12 @@ module.exports = {
 
   init() {},
 
-  action(cache) {
+  async action(cache) {
     const data = cache.actions[cache.index];
     const channel = parseInt(data.channel, 10);
     const varName = this.evalMessage(data.varName, cache);
     const info = parseInt(data.info, 10);
-    const targetChannel = this.getVoiceChannel(channel, varName, cache);
+    const targetChannel = await this.getVoiceChannel(channel, varName, cache);
     if (!targetChannel) {
       this.callNextAction(cache);
       return;
@@ -105,7 +105,7 @@ module.exports = {
         result = targetChannel.name;
         break;
       case 3:
-        result = [...targetChannel.members.values()];
+        result = targetChannel.members;
         break;
       case 4:
         result = targetChannel.full;

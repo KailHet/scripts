@@ -18,4 +18,4 @@ async function steamid64_finder() {
         console.log('SteamID64 пользователя: ' + steamID64)
     } else return console.log("Произошла ошибка при поиске SteamID64");
 }
-load()
+steamid64_finder()

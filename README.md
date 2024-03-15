@@ -1,4 +1,7 @@
-# scripts
-Scripts maded for Discord Bot Maker but you can use it in your own projects
+# Скрипты
 
-Check commites for more info about scripts
+discord_activities.js - Активности Discord (как я знаю, не актуально)
+scam_links_check.js - Проверка на скам-ссылки на Discord Nitro (На данный момент не актуально, но можно переработать под нужды)
+
+
+Смотрите коммиты, чтобы узнать больше информации о скриптах

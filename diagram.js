@@ -1,3 +1,4 @@
+// data - массив с числами
 function diag(data) {
     const width = data.length * 100 + 10
     const height = 550

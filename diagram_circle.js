@@ -1,3 +1,4 @@
+// data - массив с числами
 function circle(data) {
     const canvas = createCanvas(500, 500);
     const ctx = canvas.getContext('2d');

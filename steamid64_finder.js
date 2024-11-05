@@ -1,21 +1,21 @@
 const fetch = require('node-fetch')
-const { MessageEmbed } = require('discord.js');
 
-const link = 'https://steamcommunity.com/id/KailHet/'
-const api_key = "STEAM_API_KEY" 
+// const link = 'https://steamcommunity.com/id/KailHet/' || 'https://steamcommunity.com/profiles/76561198120696673'
+// const api_key = "STEAM_API_KEY" 
 
-async function steamid64_finder() {
+async function steamid64_finder(link, api_key) {
     if (link.includes("/profiles/")) {
-        const customURL = link.toString().slice(36).replace('/','')
-        Actions.storeValue(customURL, 1, "steamID64", cache)
+        const steamID64 = link.replace('https://steamcommunity.com/profiles/', '').replace('/','');
+        return steamID64;
     } else if (link.includes("/id/")) {
-        const customURL = link.toString().slice(30).replace('/','')
+        const customURL = link.replace('https://steamcommunity.com/id/', '').replace('/','')
 
         const url = `http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${api_key}&vanityurl=${customURL}`
         const obj = await (await fetch(url)).json()
 
         const steamID64 = obj.response.steamid
-        console.log('SteamID64 пользователя: ' + steamID64)
-    } else return console.log("Произошла ошибка при поиске SteamID64");
+        return steamID64;
+    } else return console.log("Error searching user SteamID64");
 }
-steamid64_finder()
+
+exports.steamid64_finder = steamid64_finder
